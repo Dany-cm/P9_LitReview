@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title>LIT Review</title>
+</head>
+<body>
+<section class="hero is-dark">
+    <div class="hero-body">
+        <p class="title has-text-centered">
+            Lit Review
+        </p>
+    </div>
+    <section class="hero is-white is-fullheight">
+        <div class="hero-body">
+            <div class="pr-6 container has-text-centered">
+                {% block content %}
+                <p class="has-text-right"><strong>Inscrivez-vous maintenant</strong></p>
+                <div class="has-text-right">
+                    <a href="{% url 'accounts:register' %}" class="button">S'inscrire</a>
+                </div>
+            </div>
+            <div class="mr-auto container has-text-centered">
+                <p class="has-text-left"><strong>Connectez-vous</strong></p>
+                <div class="has-text-left">
+                    <a href="{% url 'accounts:login' %}" class="button">Se connecter</a>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </section>
+</section>
+</body>
+<footer class="footer has-background-dark">
+    <div class="content has-text-centered has-text-white-bis">
+        <p>
+            Lit Review by <a href="https://github.com/Danycm1/">Danycm1</a>.
+        </p>
+    </div>
+</footer>
+</html>

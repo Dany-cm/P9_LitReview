@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <h1 class="is-size-2 pb-6">Inscrivez-vous</h1>
+
+    {% for field in form %}
+    <p>
+        {{ field.label_tag }}
+        {{ field }}
+        {% endfor %}
+    </p>
+    <button type="submit" class="button">S'inscrire</button>
+    <a href="{% url 'accounts:index' %}" class="button">Retour en arrière</a>
+</form>
+{% endblock %}
