@@ -13,24 +13,51 @@
             Lit Review
         </p>
     </div>
-    <section class="hero is-white is-fullheight">
-        <div class="hero-body">
-            <div class="pr-6 container has-text-centered">
-                {% block content %}
-                <p class="has-text-right"><strong>Inscrivez-vous maintenant</strong></p>
-                <div class="has-text-right">
-                    <a href="{% url 'accounts:register' %}" class="button">S'inscrire</a>
+</section>
+<section class="hero is-fullheight">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns is-centered has-text-centered has-text-vcentered">
+                <div class="column is-one-third">
+                    <div class="columns is-centered is-vcentered is-mobile is-multiline">
+                        {% block content %}
+                        <p class="column is-full">
+                            <strong>Inscrivez-vous maintenant</strong>
+                        </p>
+                        <div class="column is-half">
+                            <a href="{% url 'accounts:register' %}" class="button is-fullwidth">S'inscrire</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="mr-auto container has-text-centered">
-                <p class="has-text-left"><strong>Connectez-vous</strong></p>
-                <div class="has-text-left">
-                    <a href="{% url 'accounts:login' %}" class="button">Se connecter</a>
+                <div class="column is-one-third">
+                    <div class="columns is-justify-content-flex-end is-vcentered is-mobile is-multiline">
+                        <p class="column is-full">
+                            <strong>Connectez-vous</strong>
+                        </p>
+                        <div class="column is-full">
+                            <div class="field">
+                                <p class="control">
+                                    <input class="input" type="text" placeholder="Se connecter">
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control">
+                                    <input class="input" type="password" placeholder="Mot de passe">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="column pt-0 is-one-third field">
+                            <p class="control">
+                                <a href="{% url 'accounts:login' %}" class="button is-fullwidth is-success">Se
+                                    connecter</a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 {% endblock %}
             </div>
         </div>
-    </section>
+    </div>
 </section>
 </body>
 <footer class="footer has-background-dark">

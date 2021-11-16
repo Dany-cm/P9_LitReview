@@ -2,16 +2,18 @@
 
 {% block content %}
 
-<form method="post">
+<form method="post" id="form">
     {% csrf_token %}
     <h1 class="is-size-2 pb-6">Inscrivez-vous</h1>
-
     {% for field in form %}
     <p>
-        {{ field.label_tag }}
+        {{ field.label_tag }}<br>
         {{ field }}
-        {% endfor %}
+        {% for error in field.errors %}
+    <p style="color: red">{{ error }}</p>
+    {% endfor %}
     </p>
+    {% endfor %}
     <button type="submit" class="button">S'inscrire</button>
     <a href="{% url 'accounts:index' %}" class="button">Retour en arrière</a>
 </form>
