@@ -11,7 +11,7 @@ def view_index(request):
 
 def view_register(request):
     if request.user.is_authenticated:
-        return redirect('test.html')
+        return redirect('flux:home')
     else:
         if request.method == 'POST':
             form = CreateUser(request.POST)
@@ -21,7 +21,7 @@ def view_register(request):
                 raw_password = form.cleaned_data.get('password1')
                 user = authenticate(username=username, password=raw_password)
                 login(request, user)
-                return redirect('accounts/test.html')
+                return redirect('accounts:index')
         else:
             form = CreateUser()
     return render(request, 'register.html', {'form': form})
@@ -29,7 +29,7 @@ def view_register(request):
 
 def view_login(request):
     if request.user.is_authenticated:
-        return redirect('test.html')
+        return redirect('flux:home')
     else:
         if request.POST:
             username = request.POST.get('username')
@@ -38,12 +38,11 @@ def view_login(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('test.html')
-
-    return render(request, 'login.html')
+                return redirect('flux:home')
+    return render(request, 'base.html')
 
 
 def view_logout(request):
     if request.user.is_authenticated:
         logout(request)
-    return redirect('test.html')
+    return redirect('accounts:index')
