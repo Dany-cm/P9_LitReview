@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from .models import Ticket
 
 
+@login_required
 def view_index(request):
     all_tickets = Ticket.objects.all()
     all_tickets = all_tickets.annotate(content_type=Value('TICKET', CharField()))

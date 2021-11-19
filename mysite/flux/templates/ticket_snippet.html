@@ -2,5 +2,9 @@
     <p>{{ ticket.time_created }}</p>
     <p>{{ ticket.title }}</p>
     <p>{{ ticket.description }}</p>
-    <img src="{{ ticket.image }}" alt="" />
+    {% if ticket.image %}
+        <p>
+            <img src="{{ ticket.image.url }}" alt="">
+        </p>
+    {% endif %}
 </div>
