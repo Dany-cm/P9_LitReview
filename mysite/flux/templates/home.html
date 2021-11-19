@@ -1,10 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Litreview - Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
-<h1>test 123</h1>
+<nav class="navbar is-dark is-transparent" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item">
+            <img src="https://user.oc-static.com/upload/2020/09/18/16004297044411_P7.png" alt="" width="60">
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div class="navbar-menu">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+            <h1 class="navbar-item" style="left: 150px;">Lit Review</h1>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <a class="navbar-item has-text-white">
+                    Flux
+                </a>
+                <a class="navbar-item has-text-white">
+                    Posts
+                </a>
+                <a class="navbar-item has-text-white">
+                    Abonnements
+                </a>
+                <a class="navbar-item has-text-white" href="{% url 'accounts:logout' %}">
+                    Se déconnecter
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+<section class="section">
+    <div class="container">
+        <div class="columns is-vcentered">
+            <div class="column is-centered">
+                {% block ticket %}
+                    <div class="buttons" style="justify-content: space-between;">
+                        <a class="button" href="{% url 'flux:create_ticket' %}">Demander une critique</a>
+                        <a class="button is-right" href="{% url 'flux:create_ticket' %}">Créer une critique</a>
+                    </div>
+                    <div class="box">
+                        <p>
+                            {% for ticket in tickets %}
+                                {% if ticket.content_type == 'TICKET' %}
+                                    {% include 'ticket_snippet.html' %}
+                                {% elif ticket.content_type == 'REVIEW' %}
+                                    {% include 'review_snippet.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>
