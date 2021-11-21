@@ -56,7 +56,7 @@
                                 {% if ticket.content_type == 'TICKET' %}
                                     {% include 'ticket_snippet.html' %}
                                 {% elif ticket.content_type == 'REVIEW' %}
-                                    {% include 'review_snippet.html' %}
+                                    {% include 'review_snippet.html' with review=ticket %}
                                 {% endif %}
                             {% endfor %}
                         </p>

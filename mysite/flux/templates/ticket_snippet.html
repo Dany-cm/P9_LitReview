@@ -7,4 +7,9 @@
             <img src="{{ ticket.image.url }}" alt="">
         </p>
     {% endif %}
+
+    {% if ticket.state == 'UNREVIEWED' %}
+        <a class="button is-left" href="{% url 'flux:create_review' ticket_pk=ticket.pk %}"
+           style="left: 70em; bottom: 20px;">Créer une critique</a>
+    {% endif %}
 </div>

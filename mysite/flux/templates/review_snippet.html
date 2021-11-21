@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div style="border: 1px solid black;">
+    {% if review.user == user %}
+    <p>Vous avez publié une critique</p>
+    {% else %}
+    <p>{{ review.user }} a publié une critique</p>
+    {% endif %}
+    <p>{{ review.time_created }}</p>
+    <p>{{ review.headline }}</p>
+    <p>{{ review.rating }}</p>
+    <p>{{ review.body }}</p>
+    {% include 'ticket_snippet.html' with ticket=review.ticket %}
+</div> 
