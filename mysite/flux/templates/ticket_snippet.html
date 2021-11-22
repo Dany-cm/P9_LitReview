@@ -1,15 +1,30 @@
-<div style="border: 1px solid black;">
-    <p>{{ ticket.time_created }}</p>
-    <p>{{ ticket.title }}</p>
-    <p>{{ ticket.description }}</p>
-    {% if ticket.image %}
-        <p>
-            <img src="{{ ticket.image.url }}" alt="">
-        </p>
-    {% endif %}
+<div class="box">
+    <div class="media-content">
+        <div class="content">
+            <div style="display: flex; justify-content: space-between;">
+                {% if ticket.user == user %}
+                    <strong>Vous avez demandé une critique</strong>
+                {% else %}
+                    <strong>{{ ticket.user }} a demandé une critique</strong>
+                {% endif %}
+                {{ ticket.time_created }}
+            </div>
+            <br>
+            <p>{{ ticket.title }}</p>
+            <br>
+            <p>{{ ticket.description }}</p>
+            <br>
+            {% if ticket.image %}
+                <p>
+                    <img src="{{ ticket.image.url }}" alt="">
+                </p>
+            {% endif %}
 
-    {% if ticket.state == 'UNREVIEWED' %}
-        <a class="button is-left" href="{% url 'flux:create_review' ticket_pk=ticket.pk %}"
-           style="left: 70em; bottom: 20px;">Créer une critique</a>
-    {% endif %}
+            {% if ticket.state == 'UNREVIEWED' %}
+                <a class="button is-left" href="{% url 'flux:create_review' ticket_pk=ticket.pk %}"
+                   style="left: 69em; bottom: 20px;">Créer une critique</a>
+            {% endif %}
+
+        </div>
+    </div>
 </div>

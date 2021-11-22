@@ -1,0 +1,92 @@
+{% extends 'home.html' %}
+
+{% block ticket %}
+    <section class="section is-medium">
+        <h1 class="title has-text-centered">Créer une critique</h1>
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-half">
+                    <div class="box">
+                        <form method="POST" action="{% url 'flux:create_ticket_and_review' %}"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label class="label">Livre / Article</label>
+                            <br>
+                            <div class="box">
+                                <div class="field">
+                                    <label class="label">Titre</label>
+                                    <div class="control">
+                                        <label>
+                                            <input class="input" type="text" name="title">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Description</label>
+                                    <div class="control">
+                                        <label>
+                                            <textarea class="textarea" name="description"></textarea>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Image</label>
+                                    <div class="file">
+                                        <label class="file-label">
+                                            <input class="file-input" type="file" name="image">
+                                            <span class="file-cta"><span
+                                                    class="file-label">Télécharger fichier</span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="field">
+                                    <label class="label">Titre</label>
+                                    <div class="control">
+                                        <label>
+                                            <input class="input" type="text" name="headline">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Note</label>
+                                    <div class="control">
+                                        <label class="radio">
+                                            <input type="radio" id="star0" name="rating" value="0"> - 0
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" id="star1" name="rating" value="1"> - 1
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" id="star2" name="rating" value="2"> - 2
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" id="star3" name="rating" value="3"> - 3
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" id="star4" name="rating" value="4"> - 4
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" id="star5" name="rating" value="5"> - 5
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Commentaire</label>
+                                    <div class="control">
+                                        <label>
+                                            <textarea class="textarea" name="body"></textarea>
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="button is-pulled-right">Envoyer</button>
+                                <br>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

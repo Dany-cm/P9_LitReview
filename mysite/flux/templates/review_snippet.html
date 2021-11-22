@@ -1,12 +1,26 @@
-<div style="border: 1px solid black;">
-    {% if review.user == user %}
-    <p>Vous avez publié une critique</p>
-    {% else %}
-    <p>{{ review.user }} a publié une critique</p>
-    {% endif %}
-    <p>{{ review.time_created }}</p>
-    <p>{{ review.headline }}</p>
-    <p>{{ review.rating }}</p>
-    <p>{{ review.body }}</p>
-    {% include 'ticket_snippet.html' with ticket=review.ticket %}
-</div> 
+<div class="box">
+    <div class="media-content">
+        <div class="content">
+            <div style="display: flex; justify-content: space-between;">
+                {% if review.user == user %}
+                    <strong>Vous avez publié une critique</strong>
+                {% else %}
+                    <strong>{{ review.user }} a publié une critique</strong>
+                {% endif %}
+                {{ review.time_created }}
+            </div>
+            <br>
+            <p>{{ review.headline }} - {% for stars in ''|center:review.rating %}★{% endfor %}</p>
+            <br>
+            <p>{{ ticket.body }}</p>
+            <br>
+            {% if ticket.image %}
+                <p>
+                    <img src="{{ ticket.image.url }}" alt="">
+                </p>
+            {% endif %}
+
+            {% include 'ticket_snippet.html' with ticket=review.ticket %}
+        </div>
+    </div>
+</div>

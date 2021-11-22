@@ -60,7 +60,25 @@ def view_create_review(request, ticket_pk):
         return render(request, 'create_review.html', {'ticket': ticket})
 
 
-@login_required
 def get_reviewed_tickets_id(request):
     all_reviews = Review.objects.all()
     return [review.ticket.id for review in all_reviews]
+
+
+@login_required
+def view_create_ticket_and_review(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        image = request.FILES.get('image')
+        headline = request.POST.get('headline')
+        body = request.POST.get('body')
+        rating = request.POST.get('rating')
+
+        ticket = Ticket(title=title, description=description, image=image, user=request.user)
+        review = Review(headline=headline, body=body, rating=rating, ticket=ticket, user=request.user)
+        ticket.save()
+        review.save()
+        return redirect('flux:home')
+    else:
+        return render(request, 'create_ticket_and_review.html')

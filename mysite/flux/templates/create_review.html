@@ -8,7 +8,7 @@
                 <div class="column is-half">
                     <div>
                         <p>Vous êtes en train de poster en réponse à</p>
-                        {% include 'ticket_snippet.html'%}
+                        {% include 'ticket_snippet.html' %}
                     </div>
                     <form method="POST" action="{% url 'flux:create_review' ticket_pk=ticket.pk %}"
                           enctype="multipart/form-data">

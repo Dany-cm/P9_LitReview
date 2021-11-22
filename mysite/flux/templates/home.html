@@ -25,7 +25,7 @@
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
-                <a class="navbar-item has-text-white">
+                <a class="navbar-item has-text-white" href="{% url 'flux:home' %}">
                     Flux
                 </a>
                 <a class="navbar-item has-text-white">
@@ -48,7 +48,7 @@
                 {% block ticket %}
                     <div class="buttons" style="justify-content: space-between;">
                         <a class="button" href="{% url 'flux:create_ticket' %}">Demander une critique</a>
-                        <a class="button is-right" href="{% url 'flux:create_ticket' %}">Créer une critique</a>
+                        <a class="button is-right" href="{% url 'flux:create_ticket_and_review' %}">Créer une critique</a>
                     </div>
                     <div class="box">
                         <p>
@@ -67,4 +67,11 @@
     </div>
 </section>
 </body>
+<footer class="footer has-background-dark">
+    <div class="content has-text-centered has-text-white-bis">
+        <p>
+            Lit Review by <a href="https://github.com/Danycm1/">Danycm1</a>.
+        </p>
+    </div>
+</footer>
 </html>
