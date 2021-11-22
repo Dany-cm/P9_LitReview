@@ -20,11 +20,17 @@
                 </p>
             {% endif %}
 
-            {% if ticket.state == 'UNREVIEWED' %}
-                <a class="button is-left" href="{% url 'flux:create_review' ticket_pk=ticket.pk %}"
-                   style="left: 69em; bottom: 20px;">Créer une critique</a>
+            {% if ticket.user == request.user %}
+                <a class="button is-left" href="{% url 'flux:modify_ticket' ticket_pk=ticket.pk %}">
+                    Modifier mon ticket</a>
+                <a class="button is-left" href="{% url 'flux:delete_ticket' ticket_pk=ticket.pk %}">
+                    Supprimer mon ticket</a>
             {% endif %}
 
+            {% if ticket.state == 'UNREVIEWED' %}
+                <a class="button is-pulled-right" href="{% url 'flux:create_review' ticket_pk=ticket.pk %}"
+                >Créer une critique</a>
+            {% endif %}
         </div>
     </div>
 </div>

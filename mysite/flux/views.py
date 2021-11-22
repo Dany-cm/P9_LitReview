@@ -82,3 +82,22 @@ def view_create_ticket_and_review(request):
         return redirect('flux:home')
     else:
         return render(request, 'create_ticket_and_review.html')
+
+
+@login_required
+def view_modify_ticket(request, ticket_pk):
+    ticket = get_object_or_404(Ticket, pk=ticket_pk)
+    if request.method == 'POST':
+        ticket.title = request.POST.get('title')
+        ticket.description = request.POST.get('description')
+        ticket.image = request.FILES.get('image')
+
+        ticket.save()
+        return redirect('flux:home')
+    return render(request, 'modify_ticket.html', {'ticket': ticket})
+
+
+@login_required
+def view_delete_ticket(request, ticket_pk):
+    ticket = Ticket.objects.filter(id=ticket_pk).delete()
+    return redirect('flux:home')

@@ -3,11 +3,11 @@
 {% block ticket %}
 
 <section class="section is-medium">
-    <h1 class="title has-text-centered">Créer un ticket</h1>
+    <h1 class="title has-text-centered">Modifier un ticket</h1>
     <div class="container">
         <div class="columns is-centered">
             <div class="column is-half">
-                <form method="POST" action="{% url 'flux:create_ticket' %}" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'flux:modify_ticket' ticket_pk=ticket.pk %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="field">
                         <label class="label">Titre</label>
