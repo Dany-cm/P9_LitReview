@@ -21,15 +21,19 @@
             {% endif %}
 
             {% if ticket.user == request.user %}
-                <a class="button is-left" href="{% url 'flux:modify_ticket' ticket_pk=ticket.pk %}">
-                    Modifier mon ticket</a>
-                <a class="button is-left" href="{% url 'flux:delete_ticket' ticket_pk=ticket.pk %}">
-                    Supprimer mon ticket</a>
+                <div class="buttons has-addons is-right">
+                    <a class="button" href="{% url 'flux:modify_ticket' ticket_pk=ticket.pk %}">
+                        Modifier mon ticket</a>
+                    <a class="button" href="{% url 'flux:delete_ticket' ticket_pk=ticket.pk %}">
+                        Supprimer mon ticket</a>
+                </div>
             {% endif %}
 
             {% if ticket.state == 'UNREVIEWED' %}
-                <a class="button is-pulled-right" href="{% url 'flux:create_review' ticket_pk=ticket.pk %}"
-                >Créer une critique</a>
+                <div class="buttons has-addons is-right">
+                    <a class="button is-right" href="{% url 'flux:create_review' ticket_pk=ticket.pk %}"
+                    >Créer une critique</a>
+                </div>
             {% endif %}
         </div>
     </div>

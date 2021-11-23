@@ -99,5 +99,17 @@ def view_modify_ticket(request, ticket_pk):
 
 @login_required
 def view_delete_ticket(request, ticket_pk):
-    ticket = Ticket.objects.filter(id=ticket_pk).delete()
+    Ticket.objects.filter(id=ticket_pk).delete()
     return redirect('flux:home')
+
+
+@login_required
+def view_my_posts(request):
+    all_tickets = Ticket.objects.filter(user=request.user)
+    all_tickets = all_tickets.annotate(content_type=Value('TICKET', CharField()))
+
+    all_reviews = Review.objects.filter(user=request.user)
+    all_reviews = all_reviews.annotate(content_type=Value('REVIEW', CharField()))
+
+    ticket = sorted(chain(all_tickets, all_reviews), key=lambda instance: instance.time_created, reverse=True)
+    return render(request, 'posts.html', {'tickets': ticket})
