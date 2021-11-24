@@ -1,11 +1,13 @@
 from itertools import chain
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.db.models import Value, CharField
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from .models import Ticket, Review
+from .models import Ticket, Review, UserFollows
 
 
 @login_required
@@ -113,3 +115,25 @@ def view_my_posts(request):
 
     ticket = sorted(chain(all_tickets, all_reviews), key=lambda instance: instance.time_created, reverse=True)
     return render(request, 'posts.html', {'tickets': ticket})
+
+
+@login_required
+def view_subscription(request):
+    if request.method == 'POST':
+        user = request.POST.get('username')
+        user_to_follow = User.objects.get(username=user)
+
+        if user_to_follow == request.user:
+            messages.error(request, 'Vous ne pouvez pas vous ajouter vous-même !')
+            return redirect('flux:subscription')
+
+        subscription = UserFollows(user=request.user, followed_user=user_to_follow)
+        subscription.save()
+    return render(request, 'subscription.html', {'subscription': UserFollows.objects.all()})
+
+
+@login_required
+def view_unsubscribe(request, user):
+    user = User.objects.get(username=user)
+    UserFollows.objects.get(user=user).delete()
+    return redirect('flux:subscription')

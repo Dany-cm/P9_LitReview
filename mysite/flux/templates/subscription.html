@@ -1,0 +1,48 @@
+{% extends 'home.html' %}
+
+{% block ticket %}
+    <section class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-half">
+                    <form method="POST" action="{% url 'flux:subscription' %}">
+                        {% csrf_token %}
+                        <span class="is-size-5">Suivre d'autres utilisateurs</span>
+                        <div class="field is-grouped">
+                            <p class="control is-expanded">
+                                <label>
+                                    <input class="input" type="text" name="username" placeholder="Nom d'utilisateur">
+                                </label>
+                            </p>
+                            <p class="control">
+                                <button type="submit" class="button is-pulled-right">Envoyer</button>
+                            </p>
+                        </div>
+                        <span class="is-size-5">Abonnements</span>
+                        <table class="table table is-bordered table is-fullwidth">
+                            {% for user in subscription %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ user.followed_user }}</td>
+                                    <td><a class="button" style="left: 230px;"
+                                           href="{% url 'flux:unsubscribe' user.followed_user %}">Désabonner</a></td>
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                        <span class="is-size-5">Abonnés</span>
+                        <table class="table table is-bordered table is-fullwidth">
+                            {% for user in subscription %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ user.user }}</td>
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
