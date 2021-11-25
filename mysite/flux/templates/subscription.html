@@ -11,31 +11,38 @@
                         <div class="field is-grouped">
                             <p class="control is-expanded">
                                 <label>
-                                    <input class="input" type="text" name="username" placeholder="Nom d'utilisateur">
+                                    <input class="input" type="text" name="username" placeholder="Nom d'utilisateur" required>
                                 </label>
                             </p>
                             <p class="control">
                                 <button type="submit" class="button is-pulled-right">Envoyer</button>
                             </p>
                         </div>
+                        <br>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                            <br>
+                        {% endif %}
                         <span class="is-size-5">Abonnements</span>
                         <table class="table table is-bordered table is-fullwidth">
-                            {% for user in subscription %}
+                            {% for subscription in user_follows %}
                                 <tbody>
                                 <tr>
-                                    <td>{{ user.followed_user }}</td>
-                                    <td><a class="button" style="left: 230px;"
-                                           href="{% url 'flux:unsubscribe' user.followed_user %}">Désabonner</a></td>
+                                    <td>{{ subscription.followed_user }}</td>
+                                    <td><a class="button" style="left: 300px;"
+                                           href="{% url 'flux:unsubscribe' subscription.followed_user %}">Désabonner</a></td>
                                 </tr>
                                 </tbody>
                             {% endfor %}
                         </table>
                         <span class="is-size-5">Abonnés</span>
                         <table class="table table is-bordered table is-fullwidth">
-                            {% for user in subscription %}
+                            {% for subscription in user_followed  %}
                                 <tbody>
                                 <tr>
-                                    <td>{{ user.user }}</td>
+                                    <td>{{ subscription.user }}</td>
                                 </tr>
                                 </tbody>
                             {% endfor %}
@@ -45,4 +52,5 @@
             </div>
         </div>
     </section>
+
 {% endblock %}

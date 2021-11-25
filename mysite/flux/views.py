@@ -3,7 +3,7 @@ from itertools import chain
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.models import Value, CharField
+from django.db.models import Value, CharField, Q
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
@@ -12,8 +12,9 @@ from .models import Ticket, Review, UserFollows
 
 @login_required
 def view_index(request):
-    all_tickets = Ticket.objects.all()
+    user_follow = User.objects.filter(followed_by__in=UserFollows.objects.filter(user=request.user))
 
+    all_tickets = Ticket.objects.filter(Q(user__in=user_follow) | Q(user=request.user))
     all_tickets = all_tickets.annotate(content_type=Value('TICKET', CharField()))
 
     reviewed_tickets_ids = get_reviewed_tickets_id(request)
@@ -23,7 +24,7 @@ def view_index(request):
     all_unreviewed_tickets = all_tickets.exclude(id__in=all_reviewed_tickets).annotate(
         state=Value('UNREVIEWED', CharField()))
 
-    all_reviews = Review.objects.all()
+    all_reviews = Review.objects.filter(Q(user__in=user_follow) | Q(user=request.user))
     all_reviews = all_reviews.annotate(content_type=Value('REVIEW', CharField()))
 
     ticket = sorted(chain(all_unreviewed_tickets, all_reviewed_tickets, all_reviews),
@@ -119,21 +120,29 @@ def view_my_posts(request):
 
 @login_required
 def view_subscription(request):
+    user_follows = UserFollows.objects.filter(user=request.user)
+    user_followed = UserFollows.objects.filter(user=request.user)
+
     if request.method == 'POST':
         user = request.POST.get('username')
-        user_to_follow = User.objects.get(username=user)
 
-        if user_to_follow == request.user:
-            messages.error(request, 'Vous ne pouvez pas vous ajouter vous-même !')
+        try:
+            user_to_follow = User.objects.get(username=user)
+            if user_to_follow == request.user:
+                messages.error(request, 'Vous ne pouvez pas vous ajouter vous-même !')
+                return redirect('flux:subscription')
+        except User.DoesNotExist:
+            messages.error(request, "Le nom de l'utilisateur est incorrect")
             return redirect('flux:subscription')
+        else:
+            subscription = UserFollows(user=request.user, followed_user=user_to_follow)
+            subscription.save()
 
-        subscription = UserFollows(user=request.user, followed_user=user_to_follow)
-        subscription.save()
-    return render(request, 'subscription.html', {'subscription': UserFollows.objects.all()})
+    return render(request, 'subscription.html', {'user_follows': user_follows, 'user_followed': user_followed})
 
 
 @login_required
 def view_unsubscribe(request, user):
-    user = User.objects.get(username=user)
-    UserFollows.objects.get(user=user).delete()
+    user_to_remove = User.objects.get(username=user)
+    UserFollows.objects.get(followed_user_id=user_to_remove.id, user_id=request.user.id).delete()
     return redirect('flux:subscription')
