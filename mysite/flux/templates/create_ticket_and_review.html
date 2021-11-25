@@ -31,9 +31,12 @@
                                 </div>
                                 <div class="field">
                                     <label class="label">Image</label>
+                                    <img id="myimage" src="" alt="Ajouter une image pour voir un aperçu de celle-ci !">
+                                    <br><br>
                                     <div class="file">
                                         <label class="file-label">
-                                            <input class="file-input" type="file" name="image">
+                                            <input class="file-input" type="file" name="image"
+                                                   onchange="document.getElementById('myimage').src = window.URL.createObjectURL(this.files[0])">
                                             <span class="file-cta"><span
                                                     class="file-label">Télécharger fichier</span></span>
                                         </label>
