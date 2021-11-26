@@ -7,6 +7,12 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-half">
+                    <div>
+                        <p>Vous êtes en train de poster en réponse à</p>
+                        <br>
+                        {% include 'ticket_snippet.html' with ticket=review.ticket %}
+                    </div>
+                    <br>
                     <form method="POST" action="{% url 'flux:modify_review' review_pk=review.pk %}"
                           enctype="multipart/form-data">
                         {% csrf_token %}
@@ -34,7 +40,7 @@
                             <label class="label">Commentaire</label>
                             <div class="control">
                                 <label>
-                                    <textarea class="textarea" name="body" >{{ review.body }}</textarea>
+                                    <textarea class="textarea" name="body">{{ review.body }}</textarea>
                                 </label>
                             </div>
                         </div>

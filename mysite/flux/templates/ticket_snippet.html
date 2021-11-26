@@ -20,7 +20,7 @@
                 </p>
             {% endif %}
 
-            {% if ticket.user == request.user %}
+            {% if ticket.user == request.user and isFromReview == 'yes' %}
                 <div class="buttons has-addons is-right">
                     <a class="button" href="{% url 'flux:modify_ticket' ticket_pk=ticket.pk %}">
                         Modifier mon ticket</a>
