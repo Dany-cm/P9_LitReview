@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from .forms import CreateUser
@@ -10,39 +11,35 @@ def view_index(request):
 
 
 def view_register(request):
-    if request.user.is_authenticated:
-        return redirect('flux:home')
+    if request.method == 'POST':
+        form = CreateUser(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('accounts:index')
     else:
-        if request.method == 'POST':
-            form = CreateUser(request.POST)
-            if form.is_valid():
-                form.save()
-                username = form.cleaned_data.get('username')
-                raw_password = form.cleaned_data.get('password1')
-                user = authenticate(username=username, password=raw_password)
-                login(request, user)
-                return redirect('accounts:index')
-        else:
-            form = CreateUser()
+        form = CreateUser()
+
     return render(request, 'register.html', {'form': form})
 
 
 def view_login(request):
-    if request.user.is_authenticated:
-        return redirect('flux:home')
-    else:
-        if request.POST:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = authenticate(username=username, password=password)
+    if request.POST:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
 
-            if user is not None:
-                login(request, user)
-                return redirect('flux:home')
+        if user is not None:
+            login(request, user)
+            return redirect('flux:home')
+
     return render(request, 'base.html')
 
 
+@login_required
 def view_logout(request):
-    if request.user.is_authenticated:
-        logout(request)
+    logout(request)
     return redirect('accounts:index')
