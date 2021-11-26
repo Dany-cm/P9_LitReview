@@ -3,9 +3,9 @@
         <div class="content">
             <div style="display: flex; justify-content: space-between;">
                 {% if ticket.user == user %}
-                    <strong>Vous avez demandé une critique</strong>
+                    <strong>Vous avez publié un ticket</strong>
                 {% else %}
-                    <strong>{{ ticket.user }} a demandé une critique</strong>
+                    <strong>{{ ticket.user }} a publié un ticket</strong>
                 {% endif %}
                 {{ ticket.time_created }}
             </div>
