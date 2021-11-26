@@ -60,7 +60,7 @@ def view_create_review(request, ticket_pk):
 
         return redirect('flux:home')
     else:
-        return render(request, 'create_review.html', {'ticket': ticket})
+        return render(request, 'create_review.html', {'ticket': ticket, 'rating': range(6)})
 
 
 def get_reviewed_tickets_id(request):
@@ -101,8 +101,27 @@ def view_modify_ticket(request, ticket_pk):
 
 
 @login_required
+def view_modify_review(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    if request.method == 'POST':
+        review.headline = request.POST.get('headline')
+        review.body = request.POST.get('body')
+        review.rating = request.POST.get('rating')
+
+        review.save()
+        return redirect('flux:home')
+    return render(request, 'modify_review.html', {'review': review, 'rating': range(6)})
+
+
+@login_required
 def view_delete_ticket(request, ticket_pk):
     Ticket.objects.filter(id=ticket_pk).delete()
+    return redirect('flux:home')
+
+
+@login_required
+def view_delete_review(request, review_pk):
+    Review.objects.filter(id=review_pk).delete()
     return redirect('flux:home')
 
 

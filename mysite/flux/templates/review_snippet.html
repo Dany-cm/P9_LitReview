@@ -20,6 +20,15 @@
                 </p>
             {% endif %}
 
+            {% if review.user == request.user %}
+                <div class="buttons has-addons is-right">
+                    <a class="button" href="{% url 'flux:modify_review' review_pk=review.pk %}">
+                        Modifier ma critique</a>
+                    <a class="button" href="{% url 'flux:delete_review' review_pk=review.pk %}">
+                        Supprimer ma critique</a>
+                </div>
+            {% endif %}
+
             {% include 'ticket_snippet.html' with ticket=review.ticket %}
         </div>
     </div>

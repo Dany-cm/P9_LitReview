@@ -1,24 +1,21 @@
 {% extends 'home.html' %}
 
 {% block ticket %}
+
     <section class="section is-medium">
-        <h1 class="title has-text-centered">Créer une critique</h1>
+        <h1 class="title has-text-centered">Modifier une critique</h1>
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-half">
-                    <div>
-                        <p>Vous êtes en train de poster en réponse à</p>
-                        <br>
-                        {% include 'ticket_snippet.html' %}
-                    </div>
-                    <form method="POST" action="{% url 'flux:create_review' ticket_pk=ticket.pk %}"
+                    <form method="POST" action="{% url 'flux:modify_review' review_pk=review.pk %}"
                           enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="field">
                             <label class="label">Titre</label>
                             <div class="control">
                                 <label>
-                                    <input class="input" type="text" name="headline" required>
+                                    <input class="input" type="text" name="headline" style="text-align: center;"
+                                           value="{{ review.headline }}">
                                 </label>
                             </div>
                         </div>
@@ -37,7 +34,7 @@
                             <label class="label">Commentaire</label>
                             <div class="control">
                                 <label>
-                                    <textarea class="textarea" name="body" required></textarea>
+                                    <textarea class="textarea" name="body" >{{ review.body }}</textarea>
                                 </label>
                             </div>
                         </div>
@@ -47,4 +44,5 @@
             </div>
         </div>
     </section>
+
 {% endblock %}
