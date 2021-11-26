@@ -115,7 +115,12 @@ def view_modify_review(request, review_pk):
 
 @login_required
 def view_delete_ticket(request, ticket_pk):
-    Ticket.objects.filter(id=ticket_pk).delete()
+    delete_ticket = get_object_or_404(Ticket, id=ticket_pk)
+
+    if delete_ticket.image:
+        delete_ticket.image.delete()
+    delete_ticket.delete()
+
     return redirect('flux:home')
 
 
