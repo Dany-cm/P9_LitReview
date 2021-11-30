@@ -20,13 +20,6 @@ Python est nécessaire pour faire fonctionner l'application, télécharger le ic
 ```python
 Installer pipenv 
 pip install pipenv
-
-Installer les dépendances du projet:
-pipenv install
-
-Accéder à l'environnement virtuel avec :
-pipenv shell
-
 ```
 
 ## Utilisation
@@ -37,6 +30,12 @@ dossier ou vous le souhaitez.
 ```txt
 Acceder au dossier extrait avec la commande cd :
 cd P9_LitReview\mysite
+
+Installer les dépendances du projet:
+pipenv install -r requirements.txt
+
+Accéder à l'environnement virtuel avec :
+pipenv shell
 
 Lancer le serveur :
 python manage.py runserver
