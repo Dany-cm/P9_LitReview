@@ -51,7 +51,7 @@ http://127.0.0.1:8000/admin
 
 Compte administrateur par défaut :
 
-Utilisateur : test
+Utilisateur : admin
 
 Mot de passe : f5ChX8ATJAiyhDw
 
