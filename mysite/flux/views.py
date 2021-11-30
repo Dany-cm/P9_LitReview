@@ -145,7 +145,7 @@ def view_my_posts(request):
 @login_required
 def view_subscription(request):
     user_follows = UserFollows.objects.filter(user=request.user)
-    user_followed = UserFollows.objects.filter(user=request.user)
+    user_followed = UserFollows.objects.filter(followed_user=request.user)
 
     if request.method == 'POST':
         user = request.POST.get('username')
